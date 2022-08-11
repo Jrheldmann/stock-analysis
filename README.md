@@ -117,6 +117,59 @@ The purpose of this project was to create a quick, easy-to-use workbook using VB
 ---
 The apparent flaw being that for each row of data, the program would determine values for each variable, calculate based on those values, and then assign that data in the proper format to the worksheet for every row as it looped. For the sake of efficieny, I used four arrays and a unifying "tickerIndex" variable in order to pull all relevant information for a company from it's saved location in those arrays and displaying it only the necessary 12 times.
 
+---
+    '1a) Create a ticker Index
+    tickerIndex = 0
+
+    '1b) Create three output arrays
+    ReDim tickerVolumes(12) As Long
+    ReDim tickerStartingPrices(12) As Single
+    ReDim tickerEndingPrices(12) As Single
+    
+    
+    ''2a) Create a for loop to initialize the tickerVolumes to zero.
+    For j = 0 To 11
+        tickerVolumes(j) = 0
+    Next j
+    
+    ''2b) Loop over all the rows in the spreadsheet.
+    For i = 2 To RowCount
+        '3a) Increase volume for current ticker
+        tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + Cells(i, 8).Value
+        
+        
+        '3b) Check if the current row is the first row with the selected tickerIndex*******(?).
+        If Cells(i - 1, 1).Value <> tickers(tickerIndex) And Cells(i, 1).Value = tickers(tickerIndex) Then
+            tickerStartingPrices(tickerIndex) = Cells(i, 6).Value
+            
+        End If
+        
+        '3c) check if the current row is the last row with the selected ticker
+         'If the next rowâ€™s ticker doesnâ€™t match, increase the tickerIndex.
+        If Cells(i + 1, 1).Value <> tickers(tickerIndex) And Cells(i, 1).Value = tickers(tickerIndex) Then
+            tickerEndingPrices(tickerIndex) = Cells(i, 6).Value
+            
+
+            '3d Increase the tickerIndex.
+            tickerIndex = tickerIndex + 1
+            
+        End If
+    
+    Next i
+    
+    '4) Loop through your arrays to output the Ticker, Total Daily Volume, and Return.
+    For i = 0 To 11
+        
+        Worksheets("All Stocks Analysis").Activate
+        tickerIndex = i
+        Cells(4 + i, 1).Value = tickers(tickerIndex)
+        Cells(4 + i, 2).Value = tickerVolumes(tickerIndex)
+        Cells(4 + i, 3).Value = tickerEndingPrices(tickerIndex) / tickerStartingPrices(tickerIndex) - 1
+        
+    Next i
+    
+---
+
 ## Results
 ### Before & After for 2017
 
