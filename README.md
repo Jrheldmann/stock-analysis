@@ -115,8 +115,24 @@ The purpose of this project was to create a quick, easy-to-use workbook using VB
     MsgBox "This code ran in " & (endTime - startTime) & " seconds for the year " & (yearValue)
     End Sub
 ---
+The apparent flaw being that for each row of data, the program would determine values for each variable, calculate based on those values, and then assign that data in the proper format to the worksheet for every row as it looped. For the sake of efficieny, I used four arrays and a unifying "tickerIndex" variable in order to pull all relevant information for a company from it's saved location in those arrays and displaying it only the necessary 12 times.
+
 ## Results
+### Before & After for 2017
 
-- What are two conclusions you can draw about the Stocks?
+![pre2017](Resources/pre2017.PNG)
 
-- What are some limitations of this dataset?
+![VBA_Challenge_2017](Resources/VBA_Challenge_2017.png)
+
+### Before & After for 2018
+
+![pre2018](Resources/pre2018.PNG)
+
+![VBA_Challenge_2018](Resources/VBA_Challenge_2018.png)
+
+This somewhat complex, but otherwise minor alteration allowed for a massive boost in measurable run speed.
+
+## Summary
+
+
+While refactoring in VBA did make for a more efficient and faster workbook overall, it also made the code more difficult to read at a glance and, as with most refactoring endeavors, took a large amount of time to complete only to yield ultimately the same results as the iteration before.
